@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[american]{circuitikz}
+\usepackage{karnaugh-map}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+\title{Digital Logic Design Assignment 9 - EC2015-38}
+\author{Perisetti Sai Ram Mohan Rao}
+\date{December 2020}
+
+
+\begin{document}
+\maketitle
+
+\section{Question:}
+
+\textbf{A 3-input majority gate is defined by the logic
+function M(a, b,c) = ab + bc + ca . Which one of the
+following gates is represented by the function
+$M(\overline{M(a,b,c)},M(a,b,\overline{c}),c) \ ?$}
+
+
+\begin{enumerate}[label=(\Alph*)]
+\item 3-input NAND gate
+\item 3-input XOR gate 
+\item 3-input NOR gate
+\item 3-input XNOR gate
+\end{enumerate}
+
+\section{Solution :}                
+ 
+It is requried to find the  equivalent logic gate to function $M(\overline{M(a,b,c)} M(a,b,\overline{c}),c)$ 
+\newline
+\newline
+Logic gates are 3-input gates with function M=ab+bc+ca .
+\newline
+\newline
+This type of gates are also known as "Majority gates".
+\newline
+\newline
+The meaning of majority gate is if majority of vaues is 1's it gives 1.If majority of values is 0's it gives 0.
+\newline Function of majority gate is :
+\begin{equation}
+    M(a,b,c)=ab+bc+ca
+\end{equation}
+Value of X from figure.1(Logic Circuit)
+\begin{equation}
+    X=\overline{M(a,b,c)}=\overline{ab+bc+ca}  
+\end{equation}
+Value of Y from figure.1(Logic circuit)
+\begin{equation}
+    Y=M(a,b,\overline{c})=ab+b\overline{c}+\overline{c}a
+\end{equation}
+
+\begin{figure}[]
+\centering
+\input{figures/logic.tex}
+\caption{$Logic$ $circuit$ $equivalent$ $of$ $M(\overline{M(a,b,c)} M(a,b,\overline{c}),c) $ $used$ $to$ $solve$ $this$ $problem$}
+\label{logic}
+\end{figure}  
+
+
+Value of Z from figure.1(Logic circuit)
+\begin{equation}
+    Z=c
+\end{equation}
+The logical representation of function $M(\overline{M(a,b,c)}, M(a,b,\overline{c}),c)$ in terms of X,Y,Z gives from equations (2),(3),(4)
+\begin{equation}
+    M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)=M(X,Y,Z)
+\end{equation}
+From equation(1) the functon of "M"
+\begin{equation}
+    M(X,Y,Z)=XY+YZ+ZX
+\end{equation}
+From equation (2),(3),(4) using in (6)
+\begin{equation}
+    M(X,Y,Z)=(\overline{ab+bc+ca})(ab+b\overline{c}+\overline{c}a)+(ab+b\overline{c}+\overline{c}a)(c)+(\overline{ab+bc+ca})(c)
+\end{equation}
+
+Simplifying Eq(3) further using de Morgan's law 
+
+\begin{equation}
+\overline{ab}.\overline{bc}.\overline{ca}=(\overline{a}+\overline{b})(\overline{b}+\overline{c})(\overline{c}+\overline{a})  
+\end{equation}
+
+By the function using equation(1)
+
+\begin{equation}
+M(a,b,\overline{c})=ab+b\overline{c}+\overline{c}a
+\end{equation}
+
+On making few more manipulations using of above equation
+\begin{equation}
+M(\overline{M(a, b ,c )} ,M(a,b,\overline{c})c)=(\overline{ab}.\overline{bc}.\overline{ca})(ab+b\overline{c}+\overline{c}a)+(ab+b\overline{c}+\overline{c}a)(c)+(\overline{ab+bc+ca})(c)
+\end{equation}
+
+
+\begin{equation}
+M=(\overline{a}+\overline{b})(\overline{b}+\overline{c})(\overline{c}+\overline{a}))(ab+b\overline{c}+\overline{c}a)+abc+(\overline{a}+\overline{b})(\overline{b}+\overline{c})+(\overline{c}+\overline{a})c
+\end{equation}
+
+\begin{equation}
+M=(\overline{a}\overline{b}+\overline{b}\overline{c}+\overline{c}\overline{a})(a+b+c)+abc
+\end{equation}
+
+\begin{equation}
+    \overline{a}\overline{b}\overline{c}+b\overline{c}\overline{a}+c\overline{a}\overline{b}+abc
+\end{equation}
+
+\begin{equation}
+ M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)  = a\oplus b\oplus c   
+\end{equation}
+From kmaps a,b,c are exclusive of each other so gate is ''exclusive OR gate" or "XOR gate" with 3-inputs
+
+Solution using truth table and karnaugh map 
+
+
+\section{Truth Table}
+\begin{table}[!h]
+\centering
+\scalebox{1.6}{
+%\resizebox{\columnwidth}{!} {
+\input{Tables/table1.tex}
+}
+\caption{Truth Table for eq.(6)}
+\label{table1}
+\end{table}
+
+By Truth table M is max for minterms \ 1,2,4,7
+
+Corresponding values of a,b,c for M=1 are : 
+\newline for \ $m_1$ is $a=0,b=0,c=1$
+\newline for \ $m_2$ is $a=0,b=1,c=0$
+\newline for \ $m_4$ is $a=1,b=0,c=0$
+\newline for \ $m_7$ is $a=1,b=1,c=1$
+
+\section{K-map for the function $M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)$}
+\begin{figure}[h]
+\centering
+\input{kmap/kmap_SOP}
+\caption{K-map for SOP expression}
+\label{kmap_SOP}
+\end{figure} 
+
+\begin{equation}
+    M=a \oplus b \oplus c
+\end{equation}
+
+The expression obtains using the K-map is the same as that one obtains for SOP earlier . Alternatively, we can also make a K-map for obtaining the POS expression:
+
+\section{K-map for the function $M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)$}
+\begin{figure}[h]
+\centering
+\input{kmap/kmap_POS}
+\caption{K-map for POS expression}
+\label{kmap_POS}
+\end{figure} 
+
+From the kmap a,b,c are independent.a,b,c are exclusive for function M by kmaps
+\newline\textbf{From kmaps a,b,c are exclusive of each other so gate is ''exclusive OR gate" or XOR gate with 3-inputs $M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)$   }        
+\begin{equation}
+  M(\overline{M(a,b,c)},M(a,b,\overline{c}),c)=a\oplus b\oplus c   
+\end{equation}
+
+Equation of obtained using Algerbraic method SOP and POS kmaps are same i.e 3-input XOR gate -from equation 14,15,16
+\newline\textbf{Answer:3-input XOR gate}
+
+\end{document}
+
